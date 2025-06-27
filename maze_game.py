@@ -847,16 +847,17 @@ class MazeGame:
             return
         
         # Check for movement keys and move in the first direction found
-        if pygame.K_UP in self.keys_pressed:
+        # Arrow keys and WASD keys both work for movement
+        if pygame.K_UP in self.keys_pressed or pygame.K_w in self.keys_pressed:
             self.move_player(0, -1)
             self.last_move_time = current_time
-        elif pygame.K_DOWN in self.keys_pressed:
+        elif pygame.K_DOWN in self.keys_pressed or pygame.K_s in self.keys_pressed:
             self.move_player(0, 1)
             self.last_move_time = current_time
-        elif pygame.K_LEFT in self.keys_pressed:
+        elif pygame.K_LEFT in self.keys_pressed or pygame.K_a in self.keys_pressed:
             self.move_player(-1, 0)
             self.last_move_time = current_time
-        elif pygame.K_RIGHT in self.keys_pressed:
+        elif pygame.K_RIGHT in self.keys_pressed or pygame.K_d in self.keys_pressed:
             self.move_player(1, 0)
             self.last_move_time = current_time
     
@@ -1020,12 +1021,12 @@ class MazeGame:
                             self.current_screen = "title"
                     elif self.current_screen == "game" and not self.game_won and not self.game_over and not self.showing_next_maze:
                         # Add movement keys to the pressed set (for both start screen and gameplay)
-                        if event.key in [pygame.K_UP, pygame.K_DOWN, pygame.K_LEFT, pygame.K_RIGHT]:
+                        if event.key in [pygame.K_UP, pygame.K_DOWN, pygame.K_LEFT, pygame.K_RIGHT, pygame.K_w, pygame.K_a, pygame.K_s, pygame.K_d]:
                             self.keys_pressed.add(event.key)
                 
                 elif event.type == pygame.KEYUP:
                     # Remove movement keys from the pressed set
-                    if event.key in [pygame.K_UP, pygame.K_DOWN, pygame.K_LEFT, pygame.K_RIGHT]:
+                    if event.key in [pygame.K_UP, pygame.K_DOWN, pygame.K_LEFT, pygame.K_RIGHT, pygame.K_w, pygame.K_a, pygame.K_s, pygame.K_d]:
                         self.keys_pressed.discard(event.key)
             
             # Handle continuous movement
@@ -1057,7 +1058,7 @@ class MazeGame:
         
         # Controls list
         controls = [
-            "Arrow Keys - Move player",
+            "Arrow Keys or WASD - Move player",
             "SPACEBAR - Continue to next maze",
             "M - Open menu",
             "ENTER - Select menu option",
